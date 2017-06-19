@@ -1,0 +1,5 @@
+APP_TITLE = 3DiScord
+APP_DESCRIPTION = Discord client for the 3DS based on VitaCord.
+APP_AUTHOR = cheuble
+APP_PRODUCT_CODE = CTR-D-ISC
+APP_UNIQUE_ID = 0xD1SC
