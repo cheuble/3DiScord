@@ -13,7 +13,7 @@ If something is wrong, contact me on Discord: cheuble#4952
 ### Credits
 
 * UI and port by [cheuble](https://github.com/cheuble)
-* Network features by [Rinnegatamante](https://github.com/Rinnegatamante/) (from lpp3ds)
+* Network features by [Rinnegatamante](https://github.com/Rinnegatamante/) (from lpp3ds)  
 **All the original VitaCord staff:**
 * coderx3 (devingDev)
 * Arkanite
