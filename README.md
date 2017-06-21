@@ -46,7 +46,7 @@ Once you have installed these, a simple `make` should compile it. If you have FB
 * Touch screen sensitivity increased (there shouldn't be any issues now)
 * Avatars should now work every time
 * Can now scroll with the D-Pad/Control stick
-* Now licensed under GPLv3
+* Now licensed under GPLv3  
 
 **1.0**
 * Initial Release
