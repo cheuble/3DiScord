@@ -1,5 +1,4 @@
 #include "DiscordApp.hpp"
-#include <3DS.h>
 #include <sys/stat.h>
 
 

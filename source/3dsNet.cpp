@@ -65,8 +65,6 @@ D3DSNet::http_response D3DSNet::curlDiscordGet(std::string url, std::string auth
 
 		// Lets just disable SSL verification instead of loading default certs.
 		httpcSetSSLOpt(&context, SSLCOPT_DisableVerify);
-
-		httpcSetSSLOpt(&context, SSLCOPT_DisableVerify);
 		httpcAddRequestHeaderField(&context, "Content-Type", "application/json");
 		httpcAddRequestHeaderField(&context, "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)");
 		if (authtoken != " ")
@@ -102,6 +100,8 @@ D3DSNet::http_response D3DSNet::curlDiscordGet(std::string url, std::string auth
 	resp.httpcode = statuscode;
 	resp.header = std::string(header.ptr, header.len);
 	resp.body = std::string(body.ptr, body.len);
+	free(header.ptr);
+	free(body.ptr);
 	return resp;
 }
 
@@ -166,6 +166,8 @@ D3DSNet::http_response D3DSNet::curlDiscordPost(std::string url , std::string po
 	resp.httpcode = statuscode;
 	resp.header = std::string(header.ptr, header.len);
 	resp.body = std::string(body.ptr, body.len);
+	free(header.ptr);
+	free(body.ptr);
 	return resp;
 }
 

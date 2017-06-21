@@ -66,16 +66,33 @@ void DiscordApp::Start(){
 	D3dsGUI.passDiscordPointer( &discord );
 	logSD("start program loop");
 	while(aptMainLoop()){
-		D3dsGUI.Draw();
+		try {
+			D3dsGUI.Draw();
+		}
+		catch(std::exception){
+			sf2d_end_frame();
+			sf2d_swapbuffers();
+		}
 		D3dsPad.Read();
 		D3dsTouch.readTouch();
+		int scrolldirx = D3dsTouch.scrollDirX, scrolldiry = D3dsTouch.scrollDirY;
+		if (D3dsPad.left)
+			scrolldirx = -10;
+		if (D3dsPad.right)
+			scrolldirx = 10;
+		if (D3dsPad.down)
+			scrolldiry = -10;
+		if (D3dsPad.up)
+			scrolldiry = 10;
+		if (D3dsPad.up || D3dsPad.down)
+			D3dsTouch.scrolling = true;
 		if(D3dsTouch.clicking){
 			clicked = D3dsGUI.click(D3dsTouch.lastClickPoint.x , D3dsTouch.lastClickPoint.y);
 		}else{
 			clicked = -1;
 		}
 		if(D3dsTouch.scrolling){
-			scrolled = D3dsGUI.scroll(D3dsTouch.scrollDirX , D3dsTouch.scrollDirY);
+			scrolled = D3dsGUI.scroll(scrolldirx , scrolldiry);
 		}else{
 			scrolled = -1;
 		}
@@ -148,6 +165,7 @@ void DiscordApp::Start(){
 			}
 		}else if(D3DSState == 3){
 			if(D3dsPad.cross && !D3dsGUI.channelAnimIn){
+				discord.currentChannel = 0;
 				D3dsGUI.channelAnimOut = true;
 				D3dsGUI.guildAnimIn = true;
 				svcSleepThread(SLEEP_CLICK_NORMAL);
@@ -156,7 +174,8 @@ void DiscordApp::Start(){
 				case -1:
 					break;
 				default:
-					discord.JoinChannel(clicked);
+					//if(discord.currentGuild != 0)
+						discord.JoinChannel(clicked);
 					D3dsGUI.channelAnimOut = true;
 					svcSleepThread(SLEEP_CLICK_NORMAL);
 					break;

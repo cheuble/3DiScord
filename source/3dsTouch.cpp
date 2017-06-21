@@ -35,7 +35,7 @@ void D3DSTouch::readTouch(){
 
 		scrollDirX = touch.px - touch_old.px;
 		scrollDirY = touch.py - touch_old.py;
-		if(abs(scrollDirX) > 10 || abs(scrollDirY) > 10){
+		if(abs(scrollDirX) > 4 || abs(scrollDirY) > 4){
 			lastClickPoint = emptyClickPoint;
 			scrolling = true;
 			clicking = false;

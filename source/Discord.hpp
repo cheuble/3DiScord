@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <atomic>
+#include <fstream>
 
 
 #include "3DSNet.hpp"
@@ -32,6 +33,14 @@ class Discord{
 			std::string timestamp;
 			std::string id;
 		}message;
+
+		typedef struct {
+			std::string last_message_id;
+			long type;
+			std::string id;
+			std::vector<user> recipients;
+			std::vector<message> messages;
+		}directMessage;
 
 		typedef struct {
 			std::string name;
@@ -104,6 +113,7 @@ class Discord{
 		void refreshMessages();
 		void thread_loadData(void * arg);
 		void thread_refreshMessages(void *arg);
+		std::vector<directMessage> directMessages;
 
 	private:
 		bool inChannel = false;
@@ -119,6 +129,8 @@ class Discord{
 		void getGuilds();
 		void getChannels();
 		void getChannelMessages(int guildIndex);
+		void getCurrentDirectMessages();
+		void getDirectMessageChannels();
 
 		uint64_t lastFetchTimeMS;
 		uint64_t fetchTimeMS = 5000;
