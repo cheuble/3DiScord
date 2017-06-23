@@ -4,7 +4,7 @@
 #include <3ds.h>
 
 uint64_t Discord::osGetTimeMS(){
-	return (svcGetSystemTick() / 1000);
+	return (svcGetSystemTick() / 2000);
 }
 
 Discord::Discord(){
@@ -16,10 +16,24 @@ Discord::~Discord(){
 	LeaveChannel(); 
 }
 
+std::string strformat(std::string orig) {
+	std::string ret = "";
+	for (int i = 0; i < orig.length(); i++) {
+		std::string curchar = orig.substr(i,1);
+		if (curchar == "\"")
+			curchar = "\\\"";
+		if (curchar == "\n")
+			curchar = "\\n";
+		ret += curchar;
+	}
+	return ret;
+}
+
 
 void Discord::sendMessage(std::string msg){
 	if (msg == "")
 		return;
+	msg = strformat(msg);
 	std::string postData = "{ \"content\":\"" + msg + "\" }";
 	std::string sendMessageUrl;
 	if (currentGuild == 0)
@@ -710,7 +724,7 @@ long Discord::login(std::string mail , std::string pass){
 	email = mail;
 	password = pass;
 	
-	if(token.length() > 20){
+	if(token.length() > 10){
 		if(fetchUserData() == 200){
 			loggedin = true;
 			return 200;

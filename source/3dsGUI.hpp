@@ -7,6 +7,7 @@
 #include <locale>
 #include <codecvt>
 #include <sstream>
+#include "json.hpp"
 
 typedef struct {
 	std::string userId;
@@ -14,6 +15,12 @@ typedef struct {
 	unsigned int colour;
 	sf2d_texture *avatarImage;
 }Avatar;
+
+typedef struct {
+	int x;
+	int y;
+	long code;
+}emoji;
 
 class D3DSGUI{
 	public:
@@ -41,16 +48,42 @@ class D3DSGUI{
 		bool guildAnimIn = false;
 		bool guildAnimOut = false;
 		void clearAvatarVec();
+		bool filePresent(std::string path);
 		std::wstring_convert<std::codecvt_utf16<wchar_t>> converter;
 	
 	private:
+		sf2d_texture * loadTextureFromSdmcOrRomfs(std::string path);
+		void draw_text(sftd_font *font, int x, int y, float size, unsigned int colour, std::wstring txt);
+		float emojix;
+		float emojiy;
+		nlohmann::json j_theme;
+		void loadThemeFromJson();
+		unsigned int getJsonInfo(std::string param);
+		unsigned int clear_colour;
+		unsigned int credentials_colour;
+		unsigned int server_channel_bg_colour;
+		unsigned int server_channel_title_bg_colour;
+		unsigned int server_channel_title_line_colour;
+		unsigned int server_channel_title_text_colour;
+		unsigned int server_channel_text_colour;
+		unsigned int message_bg_colour;
+		unsigned int message_text_colour;
+		unsigned int message_timestamp_colour;
+		unsigned int message_user_default_colour;
+		unsigned int messagebox_bg_colour;
+		unsigned int messagebox_text_colour;
+		unsigned int bottom_screen_name_colour;
+		unsigned int bottom_screen_info_colour;
+		unsigned int bg_colour;
 		int uInfo;
 		std::wstring text;
 		void drawBottomScreen();
 		int getUserInfo(std::string userId, std::string avatarId);
 
 		void loadUserInfo(std::string uID, std::string avatarID);
+
 		std::vector<Avatar> avatarVec;
+		std::vector<emoji> emojiVec;
 
 		Discord *discordPtr;
 		
@@ -60,13 +93,15 @@ class D3DSGUI{
 		sftd_font *fontText;
 		
 		sf2d_texture *logoImage;
+		sf2d_texture *messagesBackgroundImage;
 		sf2d_texture *backgroundImage;
 		sf2d_texture *loginFormImage;
 		sf2d_texture *loadingImage;
 		sf2d_texture *menuImage;
 		sf2d_texture *defaultAvatarImage;
-		sf2d_texture *avatarCircleImage;
 		sf2d_texture *avatarImage;
+		sf2d_texture *avatarCircleImage;
+		sf2d_texture *emojis[4];
 
 		std::vector<rectangle> rectangles;
 		std::string loadingScreenstring;

@@ -14,7 +14,7 @@ endif
 include $(DEVKITARM)/3ds_rules
 
 # ip address of 3ds for spunch/3dsxlink target.
-IP3DS := 192.168.0.49
+IP3DS := 192.168.0.48
 
 #---------------------------------------------------------------------------------
 # Directory Setup
@@ -23,6 +23,7 @@ BUILD := build
 OUTPUT := output
 RESOURCES := resources
 DATA := data
+ROMFS := romfs
 SOURCES := source
 INCLUDES := $(SOURCES) include
 
@@ -51,7 +52,7 @@ endif
 ASFLAGS := -g $(ARCH)
 LDFLAGS = -specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS := -lsftd -lsf2d -lsfil -lctru -lcitro3d -lfreetype -lpng -ljpeg -lz 
+LIBS := -lsftd -lsf2d -lsfil -lctru -lcitro3d -lfreetype -lpng -ljpeg -lz -lm
 LIBDIRS := $(PORTLIBS) $(CTRULIB) ./lib
 
 #---------------------------------------------------------------------------------
@@ -175,6 +176,9 @@ else
 endif
 
 _3DSXFLAGS += --smdh=$(OUTPUT_FILE).smdh
+ifneq ("$(wildcard $(ROMFS))","")
+	_3DSXFLAGS += --romfs=$(ROMFS)
+endif
 
 #---------------------------------------------------------------------------------
 # Main Targets
@@ -235,12 +239,6 @@ spunch : $(OUTPUT_FILE).cia
 	@echo $(notdir $<)
 	@$(bin2o)
 
-#---------------------------------------------------------------------------------
-%.png.o	:	%.png
-#---------------------------------------------------------------------------------
-	@echo $(notdir $<)
-	@$(bin2o)
-	
 #---------------------------------------------------------------------------------
 # you need a rule like this for each extension you use as binary data
 #---------------------------------------------------------------------------------

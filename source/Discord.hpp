@@ -1,4 +1,4 @@
-#ifndef DISCORD_HPP
+﻿#ifndef DISCORD_HPP
 #define DISCORD_HPP
 
 #include <string>
