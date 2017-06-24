@@ -2,14 +2,13 @@
 ## A Discord client for the 3DS
 
 3DiScord is a heavily WIP Discord client for the 3DS based on [VitaCord](https://github.com/devingDev/VitaCord) by [devingDev / coderx3](https://github.com/devingDev/).  
-Note: this is based on an old version of VitaCord so no DMs and it may crash.  
 If something is wrong, contact me on Discord: cheuble#4952  
 Download themes [here](https://github.com/cheuble/3DiScord-themes)
 **Disclaimer**: I am not responsible for anything that happens to you if you're using this app. Use this at your own risk.
 
 ### Features
 
-* Send and receive messages in servers only (no DMs **at the moment**)
+* Send and receive messages (DMs and servers)
 * 2FA supported
 
 ### Credits
