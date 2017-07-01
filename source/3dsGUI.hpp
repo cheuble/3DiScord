@@ -92,6 +92,7 @@ class D3DSGUI{
 		sftd_font *fontUser;
 		sftd_font *fontText;
 		
+		sf2d_texture *clearImage;
 		sf2d_texture *logoImage;
 		sf2d_texture *messagesBackgroundImage;
 		sf2d_texture *backgroundImage;
@@ -101,6 +102,11 @@ class D3DSGUI{
 		sf2d_texture *defaultAvatarImage;
 		sf2d_texture *avatarImage;
 		sf2d_texture *avatarCircleImage;
+		sf2d_texture *bottommessageImage;
+		sf2d_texture *channelbgImage;
+		sf2d_texture *titlebgImage;
+		sf2d_texture *messageboxImage;
+		sf2d_texture *menulineImage;
 		sf2d_texture *emojis[4];
 
 		std::vector<rectangle> rectangles;

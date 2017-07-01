@@ -133,8 +133,9 @@ void D3DSGUI::drawBottomScreen()
 {
 	try {
 		sf2d_draw_rectangle(0, 0, 320, 240, bg_colour);
+		sf2d_draw_texture(bottommessageImage, 0, 0);
 		sf2d_draw_texture(menuImage, 0, 0);
-		sf2d_draw_rectangle(0, 200, 320, 40, messagebox_bg_colour);
+		sf2d_draw_texture(messageboxImage, 0, 200);
 		if (discordPtr->currentGuild != 0) {
 			sftd_draw_text(fontGuilds, 74, 15, bottom_screen_name_colour, 22, std::string("#" + discordPtr->guilds[discordPtr->currentGuild].channels[discordPtr->currentChannel].name).c_str());
 			text = converter.from_bytes(wrap(discordPtr->guilds[discordPtr->currentGuild].channels[discordPtr->currentChannel].topic.c_str(), fontText, 13, 246));
@@ -182,6 +183,7 @@ D3DSGUI::D3DSGUI(){
 	}
 	loadThemeFromJson();
 	sf2d_set_clear_color(clear_colour);
+	clearImage = loadTextureFromSdmcOrRomfs("clear.png");
 	backgroundImage = loadTextureFromSdmcOrRomfs("login-form-background.png");
 	loginFormImage = loadTextureFromSdmcOrRomfs("login-form.png");
 	loadingImage = loadTextureFromSdmcOrRomfs("loading.png");
@@ -190,6 +192,11 @@ D3DSGUI::D3DSGUI(){
 	defaultAvatarImage = loadTextureFromSdmcOrRomfs("default-avatar.png");
 	messagesBackgroundImage = loadTextureFromSdmcOrRomfs("messages-background.png");
 	avatarCircleImage = loadTextureFromSdmcOrRomfs("avatar-circle.png");
+	bottommessageImage = loadTextureFromSdmcOrRomfs("bottom-message.png");
+	titlebgImage = loadTextureFromSdmcOrRomfs("titlebg.png");
+	channelbgImage = loadTextureFromSdmcOrRomfs("channelbg.png");
+	messageboxImage = loadTextureFromSdmcOrRomfs("messagebox.png");
+	menulineImage = loadTextureFromSdmcOrRomfs("menuline.png");
 
 	emojis[0] = loadTextureFromSdmcOrRomfs("emojispritesheet_ul.png");
 	emojis[1] = loadTextureFromSdmcOrRomfs("emojispritesheet_ur.png");
@@ -244,6 +251,12 @@ D3DSGUI::~D3DSGUI(){
 	sf2d_free_texture(menuImage);
 	sf2d_free_texture(defaultAvatarImage);
 	sf2d_free_texture(avatarImage);
+	sf2d_free_texture(bottommessageImage);
+	sf2d_free_texture(titlebgImage);
+	sf2d_free_texture(channelbgImage);
+	sf2d_free_texture(messageboxImage);
+	sf2d_free_texture(clearImage);
+	sf2d_free_texture(menulineImage);
 	sftd_free_font(pgf);
 	sftd_free_font(fontGuilds);
 	sftd_free_font(fontUser);
@@ -330,6 +343,7 @@ std::string D3DSGUI::wrap(const char * text, sftd_font *font, int font_size, siz
 void D3DSGUI::Draw(){
 	sf2d_start_frame(GFX_TOP, GFX_LEFT);
 	if(state == 0){
+		sf2d_draw_texture(clearImage, 0,0);
 		sf2d_draw_texture(logoImage, 0, 0);
 		sf2d_end_frame();
 		sf2d_start_frame(GFX_BOTTOM, GFX_LEFT);
@@ -354,6 +368,7 @@ void D3DSGUI::Draw(){
 		sftd_draw_text(fontGuilds, 65, 105, credentials_colour, 22, "Loading your stuff");
 
 	}else if(state == 2){
+		sf2d_draw_texture(clearImage, 0,0);
 		sf2d_draw_texture(logoImage, 0, 0);
 		sf2d_end_frame();
 		sf2d_start_frame(GFX_BOTTOM, GFX_LEFT);
@@ -372,6 +387,7 @@ void D3DSGUI::Draw(){
 			}
 		}
 		sf2d_draw_rectangle(guildXIndex, 0, 320, 240, server_channel_bg_colour);
+		sf2d_draw_texture(channelbgImage, 0, 0);
 		for (int i = 0; i < guildBoxes.size(); i++) {
 			if (guildBoxes[i].x + guildBoxes[i].w > 0 && guildBoxes[i].x < 240) {
 				text = converter.from_bytes(discordPtr->guilds[i].name.c_str());
@@ -380,11 +396,14 @@ void D3DSGUI::Draw(){
 			}
 		}
 		sf2d_draw_rectangle(guildScrollX + guildXIndex, 0, 320, 49, server_channel_title_bg_colour);
+		sf2d_draw_texture(titlebgImage, 0, 0);
 		sf2d_draw_rectangle(guildScrollX + guildXIndex, 49, 320, 1, server_channel_title_line_colour);
+		sf2d_draw_texture(menulineImage, 0, 49);
 		sftd_draw_text(fontGuilds, guildScrollX + guildXIndex + 10, 13, server_channel_title_text_colour, 22, "Servers");
 		
 		
 	}else if(state == 3){
+		sf2d_draw_texture(clearImage, 0,0);
 		sf2d_draw_texture(logoImage, 0, 0);
 		sf2d_end_frame();
 		sf2d_start_frame(GFX_BOTTOM, GFX_LEFT);
@@ -409,6 +428,7 @@ void D3DSGUI::Draw(){
 			}
 		}
 		sf2d_draw_rectangle(channelXIndex, 0, 320, 240, server_channel_bg_colour);
+		sf2d_draw_texture(channelbgImage, 0, 0);
 		for(int i = 0 ; i < channelBoxes.size() ; i++){
 			if (channelBoxes[i].x + channelBoxes[i].w > 0 && channelBoxes[i].x < 240) {
 				text = discordPtr->currentGuild == 0 ? converter.from_bytes(discordPtr->directMessages[i].recipients[0].username) : converter.from_bytes("#" + discordPtr->guilds[discordPtr->currentGuild].channels[i].name);
@@ -417,6 +437,7 @@ void D3DSGUI::Draw(){
 			}
 		}
 		sf2d_draw_rectangle(channelScrollX + channelXIndex, 0, 320, 49, server_channel_title_bg_colour);
+		sf2d_draw_texture(titlebgImage, 0, 0);
 		sf2d_draw_rectangle(channelScrollX + channelXIndex, 49, 320, 1, server_channel_title_line_colour);
 		sftd_draw_text(fontGuilds, channelScrollX + channelXIndex + 10, 13, server_channel_title_text_colour, 22, discordPtr->guilds[discordPtr->currentGuild].name.c_str());
 		
