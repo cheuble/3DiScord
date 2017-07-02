@@ -1,3 +1,11 @@
+
+Changes:
+Replaced Nova Theme with Default theme, Nova theme still in releases aviable.
+
+Old Changes:
+3DSGui.hpp and cpp for easier theme engine
+REplaced Default Theme with Nova Theme
+
 # 3DiScord
 ## A Discord client for the 3DS
 
@@ -14,6 +22,7 @@ Download themes [here](https://github.com/cheuble/3DiScord-themes)
 ### Credits
 
 * UI and port by [cheuble](https://github.com/cheuble)
+* Easier Theme Engine + Nova Theme by NicoAICP/Hotbrawl20
 * Network features by [Rinnegatamante](https://github.com/Rinnegatamante/) (from lpp3ds) 
 **All the original VitaCord staff:**
 * coderx3 (devingDev)
