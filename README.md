@@ -1,3 +1,11 @@
+
+Changes:
+Replaced Nova Theme with Default theme, Nova theme still in releases aviable.
+
+Old Changes:
+3DSGui.hpp and cpp for easier theme engine
+REplaced Default Theme with Nova Theme
+
 # 3DiScord
 ## A Discord client for the 3DS
 
